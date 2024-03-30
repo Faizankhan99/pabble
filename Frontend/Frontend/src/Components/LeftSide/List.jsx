@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import style from "./All.module.css";
 import { List, ListItem, Box, Text } from "@chakra-ui/react";

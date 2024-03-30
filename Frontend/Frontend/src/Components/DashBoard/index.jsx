@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-constant-condition */
-import { Box, Button, Heading, Skeleton, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Skeleton, Stack } from "@chakra-ui/react";
 import style from "../DashBoard/dashboard.module.css";
 import { useEffect, useState } from "react";
 import AllTask from "./Task/AllTask";

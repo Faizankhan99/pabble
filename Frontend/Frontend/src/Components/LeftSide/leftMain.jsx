@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box, Divider, Image, Avatar, Text } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";

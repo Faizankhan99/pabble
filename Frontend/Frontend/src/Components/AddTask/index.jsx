@@ -1,14 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Box, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Popup } from "./AddTaskModel";
 
 export default function AddTask({ setReloadData, reloadData }) {
   const [isOpen, setIsopen] = useState(false);
-  const [text, setText] = useState("");
-
-  function handlechange(e) {
-    setText(e.target.value);
-  }
 
   function onClickbutton() {
     setIsopen(true);

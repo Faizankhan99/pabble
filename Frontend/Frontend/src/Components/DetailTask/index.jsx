@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import style from "../DetailTask/detail.module.css";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
-import { GiTeacher } from "react-icons/gi";
 import { BiTimer } from "react-icons/bi";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";

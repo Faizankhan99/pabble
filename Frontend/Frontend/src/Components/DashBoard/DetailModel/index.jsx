@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Modal,
@@ -16,7 +17,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { DeleteTask, EditStatus, EditTaskData, GetTask } from "../../../Utils";
+import { DeleteTask, EditStatus, EditTaskData } from "../../../Utils";
 
 const initial = {
   task: "",

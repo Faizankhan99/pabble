@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import { AiOutlineUser } from "react-icons/ai";

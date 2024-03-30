@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box, Heading, Avatar, Button } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "../dashboard.module.css";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import TaskModal from "../DetailModel";
