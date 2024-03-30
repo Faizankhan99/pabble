@@ -1,54 +1,81 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-constant-condition */
-import React from "react";
-import { Heading } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { Box, Button, Heading, Skeleton, Stack, Text } from "@chakra-ui/react";
 import style from "../DashBoard/dashboard.module.css";
 import { useState } from "react";
-import AddTask from "../AddTask";
 import AllTask from "../DashBoard/Task/AllTask";
+import { GetTask } from "../../Utils";
+import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
 
-const demo = [
-  {
-    _id: {
-      $oid: "1",
-    },
-    thumbnail:
-      "https://e1.pxfuel.com/desktop-wallpaper/574/84/desktop-wallpaper-net-full-stack-developer-full-stack-thumbnail.jpg",
-    title: "Full stack Web Developer",
-    description:
-      "Prepare for a career as a full stack developer. Gain the in-demand skills and hands-on experience to get job-ready in less than 4 months. No prior experience required.",
-    price: 20000,
-    teacher: "Faizan khan",
-    duration: "6720",
-    validity: "6",
-    videolink: "",
-    __v: 0,
-  },
-  {
-    _id: {
-      $oid: "2",
-    },
-    thumbnail:
-      "https://e1.pxfuel.com/desktop-wallpaper/574/84/desktop-wallpaper-net-full-stack-developer-full-stack-thumbnail.jpg",
-    title: "Full stack Web Developer",
-    description:
-      "Prepare for a career as a full stack developer. Gain the in-demand skills and hands-on experience to get job-ready in less than 4 months. No prior experience required.",
-    price: 20000,
-    teacher: "Faizan khan",
-    duration: "6720",
-    validity: "6",
-    videolink: "",
-    __v: 0,
-  },
-];
 export default function Complete() {
-  const [data, setData] = useState(demo);
+  const [data, setData] = useState();
+  const [useData, setUserData] = useState({});
+  const { loginData } = useSelector((store) => store.auth);
+  const [loading, setLoading] = useState(false);
+  const [reloadData, setReloadData] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(3);
+
+  useEffect(() => {
+    if (loginData) {
+      setUserData(jwtDecode(loginData.token));
+    }
+  }, [loginData]);
+
+  //  -------------------------------(USEEEFECT FOT GETTASK AND IT RENDER BOTH DEPENDENDENCY)---------------------------------
+
+  useEffect(() => {
+    if (useData.id) {
+      setLoading(true);
+      try {
+        GetTask(useData.id).then((res) => {
+          const filterData = res.filter((res) => {
+            return res.status === "done";
+          });
+          localStorage.setItem("done", JSON.stringify(filterData.length));
+          setData(filterData);
+          setLoading(false);
+        });
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    }
+  }, [useData, reloadData]);
+
+  // ------------(Data Loading Effect)----------------
+  if (loading) {
+    return (
+      <Stack mt="10%">
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+        <Skeleton height="50px" />
+      </Stack>
+    );
+  }
+
+  // -------------------------( pagination Logic) ------------------------------------
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = data?.slice(indexOfFirstRecord, indexOfLastRecord);
+  console.log("Datalenght-->", currentRecords);
 
   return (
     <div>
       {/* ---------Main Heading------ */}
       <div className={style.mainDiv}>
         <Heading>Completed Task List</Heading>
-        <AddTask />
       </div>
 
       {/* -------------- ( Api Error ) --------------- */}
@@ -58,8 +85,31 @@ export default function Complete() {
 
       {/* --------- Course Box ------ */}
       <div>
-        <AllTask data={data} />
+        <AllTask
+          data={currentRecords}
+          setReloadData={setReloadData}
+          reloadData={reloadData}
+        />
       </div>
+
+      {/* --------------------------(Pagination Button)-------------------- */}
+      <Box display="flex" justifyContent="space-around" mt="20px">
+        <Button
+          isDisabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+        >
+          Prev
+        </Button>
+        <Button fontSize="20px" bgColor={"red"} w="15%">
+          {currentPage}
+        </Button>
+        <Button
+          isDisabled={data?.length <= 3}
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
+          Next
+        </Button>
+      </Box>
     </div>
   );
 }

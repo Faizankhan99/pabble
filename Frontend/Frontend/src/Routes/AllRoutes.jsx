@@ -6,6 +6,9 @@ import MainComponents from "../Components/Main/Main";
 import CompleteTask from "../Components/CompleteTask";
 import AuthRoute from "../Private/AuthRoute";
 import TodoTask from "../Components/Todo";
+import DetailTask from "../Components/DetailTask";
+
+// ----------------------------------(ALL ROUTES COMPONENT)-----------------------------------------------------------------
 
 const AllRoutes = () => {
   return (
@@ -13,6 +16,15 @@ const AllRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      {/* Wrap with private Route if user Login then  he can access this page */}
+      <Route
+        path="/task/:id"
+        element={
+          <AuthRoute>
+            <DetailTask />
+          </AuthRoute>
+        }
+      />
       {/* Wrap with private Route if user Login then  he can access this page */}
       <Route
         path="/dashboard"

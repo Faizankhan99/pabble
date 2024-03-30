@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+//  ------------------------(Task Model) ---------------------------
+
 const taskSchema = new mongoose.Schema(
   {
     userId: {
@@ -7,7 +9,7 @@ const taskSchema = new mongoose.Schema(
       ref: "user",
     },
     task: { type: String },
-    storyPoint: { type: String },
+    description: { type: String },
     duration: { type: String },
     status: {
       type: String,

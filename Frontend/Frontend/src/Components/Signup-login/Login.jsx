@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Heading, Input, useToast } from "@chakra-ui/react";
 import style from "./css.module.css";
 import React, { useEffect } from "react";

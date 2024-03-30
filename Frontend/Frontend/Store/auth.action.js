@@ -1,3 +1,4 @@
+import { URL } from "../src/Utils";
 import {
   failed,
   loading,
@@ -7,10 +8,12 @@ import {
 } from "./auth.type";
 import axios from "axios";
 
+// ------------------(Signup Function)---------------------------
+
 export const signupUser = (form) => async (dispatch) => {
   dispatch({ type: loading });
   try {
-    const res = await axios.post("http://localhost:8080/user/signup", {
+    const res = await axios.post(`${URL}/user/signup`, {
       name: form.name,
       email: form.email,
       password: form.password,
@@ -21,10 +24,12 @@ export const signupUser = (form) => async (dispatch) => {
   }
 };
 
+// ------------------(Login Function)---------------------------
+
 export const LoginApi = (form) => async (dispatch) => {
   dispatch({ type: loading });
   try {
-    const res = await axios.post("http://localhost:8080/user/login", {
+    const res = await axios.post(`${URL}/user/login`, {
       email: form.email,
       password: form.password,
     });

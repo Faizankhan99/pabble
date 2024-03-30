@@ -5,6 +5,8 @@ import LeftList from "./List";
 
 export default function LeftMain() {
   const navigate = useNavigate();
+  const Name = JSON.parse(localStorage.getItem("user")); // for getting name from localStorage
+
   return (
     <Box w="90%" m="auto">
       <Box
@@ -18,7 +20,7 @@ export default function LeftMain() {
           mt={["4%", "4%", "6%"]}
           w={["20%", "15%", "20%"]}
           h={["30px", "40px", "56px"]}
-          name="Faizan Khan"
+          name={Name}
         />
         <Box mt="3%">
           <Text
@@ -26,7 +28,7 @@ export default function LeftMain() {
             fontWeight="medium"
             color="white"
           >
-            Faizan Khan
+            {Name}
           </Text>
           <Text
             fontSize={["12px", "15px", "15px"]}

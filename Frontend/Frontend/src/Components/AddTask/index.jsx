@@ -2,7 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Popup } from "./AddTaskModel";
 
-export default function AddTask() {
+export default function AddTask({ setReloadData, reloadData }) {
   const [isOpen, setIsopen] = useState(false);
   const [text, setText] = useState("");
 
@@ -26,8 +26,13 @@ export default function AddTask() {
           + Add New
         </Button>
       </Box>
-      <Popup isOpen={isOpen} setIsopen={setIsopen} />
-      {/* <ListItem query={query} /> */}
+      {/*---------------  ADD TASK MODAL OPEN AND CONDTION TRUE -----------------------*/}
+      <Popup
+        isOpen={isOpen}
+        setIsopen={setIsopen}
+        setReloadData={setReloadData}
+        reloadData={reloadData}
+      />
     </Box>
   );
 }

@@ -1,6 +1,7 @@
 /* eslint-disable no-debugger */
 import { loading, login_success, logout, signup_success } from "./auth.type";
 
+// ---------------------(Reducer initial state) --------------------
 const initialState = {
   signupData: "",
   loginData: JSON.parse(localStorage.getItem("loginData")) || "",
@@ -9,6 +10,7 @@ const initialState = {
   error: false,
 };
 
+//  -------------------(Auth Reducers) ---------------------------------------
 export const authReducer = (state = initialState, { type, payload }) => {
   console.log("type", type, payload);
   switch (type) {

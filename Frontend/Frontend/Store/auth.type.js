@@ -1,3 +1,5 @@
+// -------------------------------(All Auth Reducer Type)-------------------------------------------------------
+
 export const loading = "user/loading";
 export const failed = "user/failed";
 export const login_success = "user/login/success";

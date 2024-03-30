@@ -2,6 +2,8 @@ const User = require("../Schemas/user.Schema");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
+// --------------------------------(User Controller's)--------------------------------
+
 const Signup = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {

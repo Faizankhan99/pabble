@@ -6,7 +6,20 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+// -------------(cors Origin)------------------------------------------------
+app.use(
+  cors({
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "X-Access-Token",
+      "Authorization",
+    ],
+    methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

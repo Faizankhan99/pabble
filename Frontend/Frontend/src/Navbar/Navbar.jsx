@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import style from "./navbar.module.css";
 import {
   Box,
@@ -23,7 +23,9 @@ const Navbar = () => {
   // -------------- (Token Decode) ---------------
   useEffect(() => {
     if (loginData) {
-      setUserData(jwtDecode(loginData.token));
+      const userName = jwtDecode(loginData.token);
+      setUserData(userName);
+      localStorage.setItem("user", JSON.stringify(userName.name));
     }
   }, [loginData]);
 
@@ -84,24 +86,6 @@ const Navbar = () => {
           </>
         )}
       </SimpleGrid>
-
-      <Box gap={3} display={["flex", "flex", "none", "none"]}>
-        {/* ---------- (Conditional rendering) ------------*/}
-        {!loginData ? (
-          <>
-            <Link to="/login">
-              <Text bg="#dc3544" borderRadius={20} color="#ffff" pl="1" pr="1">
-                Log in
-              </Text>
-            </Link>
-            <Link to="/signup">
-              <Text fontWeight={700}>Sign up</Text>
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
-      </Box>
     </Box>
   );
 };

@@ -3,19 +3,23 @@ import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import { AiOutlineUser } from "react-icons/ai";
 
 export default function Todo() {
+  const pending = JSON.parse(localStorage.getItem("pending")); // for getting name from localStorage
+  const Complete = JSON.parse(localStorage.getItem("done")); // for getting name from localStorage
+  const Total = JSON.parse(localStorage.getItem("total")); // for getting name from localStorage
+
   let item = [
     {
-      Number: "200",
+      Number: Total,
       text: "Total Tasks",
       id_: "1",
     },
     {
-      Number: "100",
+      Number: pending,
       text: "Pending Tasks",
       id_: "2",
     },
     {
-      Number: "100",
+      Number: Complete,
       text: "Completed Tasks",
       id_: "5",
     },

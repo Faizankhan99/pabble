@@ -1,14 +1,26 @@
 /* eslint-disable react/prop-types */
 import { Box, Heading, Avatar, Button } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../dashboard.module.css";
 import { AiOutlineFieldTime } from "react-icons/ai";
-import DetailTask from "../DetailModel";
+import TaskModal from "../DetailModel";
+import { Link } from "react-router-dom";
 
-const AllTask = ({ data }) => {
-  console.log("data", data);
+const AllTask = ({ data, setReloadData, reloadData }) => {
+  console.log("data1", data);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editData, setEditData] = useState();
+  const Name = JSON.parse(localStorage.getItem("user")); // for getting name from localStorage
+
+  /* ------------------------(GET DATE FUNCTION)--------------------------  */
+
+  const GetDate = (res) => {
+    const date = new Date(res);
+    console.log("resdata", date.toDateString());
+    return date.toDateString();
+  };
+
+  /* ------------------------(Modal OPEN FUNCTION)--------------------------  */
 
   const handleUpdate = (el) => {
     setIsModalVisible(true);
@@ -19,40 +31,52 @@ const AllTask = ({ data }) => {
 
   return (
     <div>
+      {/* ------------------------(MAPPING THE DATA)--------------------------  */}
+
       {data?.map((el) => (
-        <div
-          key={el._id.$oid}
-          className={style.mainContainer}
-          onClick={() => handleUpdate(el)}
-        >
-          <Avatar className={style.img} size="xl" name="Dan Abrahmov" />
+        <div key={el._id} className={style.mainContainer}>
+          <Link to={`/task/${el._id}`}>
+            <Avatar className={style.img} size="xl" name={Name} />
+          </Link>
           <div>
-            <Heading size="xs" mt="5" ml="70%" color="#3e4192">
-              status:- pending
+            <Heading
+              size="xs"
+              mt="5"
+              ml="60%"
+              color="#3e4192"
+              onClick={() => handleUpdate(el)}
+            >
+              status:-{el.status}
             </Heading>
             <Heading size="lg" mt="40px">
-              Complete NavBar Routing and Navigation
+              {el.task}
             </Heading>
 
             <div className={style.time}>
               <Box display="flex" alignItems="center" gap="1">
-                <AiOutlineFieldTime />5 days Validity
+                <AiOutlineFieldTime />
+                {el.duration}
               </Box>
+
               <Box display="flex" alignItems="center" gap="1">
                 <AiOutlineFieldTime />
-                20 June 2020
+                {GetDate(el.createdAt)}
               </Box>
             </div>
           </div>
-          <Button onClick={() => handleUpdate(el)} />
+          <Link to={`/task/${el._id}`}>
+            <Button onClick={() => handleUpdate(el)} />
+          </Link>
         </div>
       ))}
 
       {/* ------------------------(Modal for Task Status change)--------------------------  */}
-      <DetailTask
+      <TaskModal
         isOpen={isModalVisible}
         setIsOpen={setIsModalVisible}
         editData={editData}
+        setReloadData={setReloadData}
+        reloadData={reloadData}
       />
     </div>
   );

@@ -9,6 +9,8 @@ import {
   Input,
   Box,
   FormLabel,
+  useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { AddTask, GetTask } from "../../Utils";
@@ -17,13 +19,14 @@ import { useSelector } from "react-redux";
 
 const initial = {
   task: "",
-  storyPoint: "",
+  description: "",
   duration: "",
 };
-export function Popup({ isOpen, setIsopen }) {
+export function Popup({ isOpen, setIsopen, setReloadData, reloadData }) {
   const [text, setText] = useState(initial);
   const [useData, setUserData] = useState({});
   const { loginData } = useSelector((store) => store.auth);
+  const toast = useToast();
 
   // -------------- (Token Decode) ---------------
   useEffect(() => {
@@ -34,6 +37,7 @@ export function Popup({ isOpen, setIsopen }) {
 
   console.log("userData", useData);
 
+  //  -------------------------------(HANDLE ONCHANGE FUNCTION)---------------------------------
   function handlechange(e) {
     const { name, value } = e.target;
     setText({ ...text, [name]: value });
@@ -43,23 +47,29 @@ export function Popup({ isOpen, setIsopen }) {
     setIsopen(false);
   }
 
+  //  -------------------------------(HANDLE SUBMIT FORM FUNCTION)---------------------------------
   function Submitdata(e) {
     e.preventDefault();
-    GetTask(useData.id);
-
-    // AddTask(text, useData.id)
-    //   .then((res) => {
-    //     console.log(res);
-    //     GetTask(useData.id);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //   });
-    // onClose();
+    AddTask(text, useData.id)
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          toast({
+            title: "Task Addedd Successfully",
+            status: "info",
+            duration: 2000,
+            isClosable: true,
+            position: "top",
+          });
+          setReloadData(!reloadData);
+          setIsopen(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    onClose();
   }
-
-  //   useEffect(() => {
-  //   }, [text]);
 
   return (
     <>
@@ -71,6 +81,7 @@ export function Popup({ isOpen, setIsopen }) {
           <ModalBody>
             <Box gap="20px">
               <form action="" onSubmit={Submitdata}>
+                {/*  //  -------------------------------(TITLE INPUT)-------------------- */}
                 <FormLabel ml="3px">Title</FormLabel>
                 <Input
                   placeholder="Enter Title"
@@ -79,14 +90,18 @@ export function Popup({ isOpen, setIsopen }) {
                   name="task"
                   onChange={handlechange}
                 />
-                <FormLabel ml="3px">Story Point</FormLabel>
-                <Input
-                  placeholder="Enter Story No.."
+                {/*  //  -------------------------------(DESCRIPTION INPUT)-------------------- */}
+
+                <FormLabel ml="3px">Story Description</FormLabel>
+                <Textarea
+                  placeholder="Enter description of task."
                   borderBottom="1px solid black"
                   value={text.value}
-                  name="storyPoint"
+                  name="description"
                   onChange={handlechange}
                 />
+                {/*  //  -------------------------------(DURATION INPUT)-------------------- */}
+
                 <FormLabel ml="3px">Duration for complete</FormLabel>
                 <Input
                   placeholder="Enter Duration"
@@ -95,6 +110,8 @@ export function Popup({ isOpen, setIsopen }) {
                   name="duration"
                   onChange={handlechange}
                 />
+                {/*  //  -------------------------------(SUBMIT BUTTON)-------------------- */}
+
                 <Input
                   type="submit"
                   mt="5%"
